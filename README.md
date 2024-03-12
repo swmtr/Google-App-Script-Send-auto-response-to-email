@@ -2,6 +2,10 @@
 
 This Google Apps Script automates the process of sending a response email to access requests (for file editing in docs/slides/sheets) received in Gmail. It specifically targets unread email threads from a specific sender (`drive-shares-dm-noreply@google.com`) with a subject line indicating a request for access to a presentation (`Share request for`). Even though, this script was created to auto-respond to specific emails, it can be modified for any email criteria.
 
+## The Problem
+
+You have a public online Google document, presentation or a sheet which people can copy, but some people are lazy to click around the interface, they just simply request edit access. The first thought, I had was to setup an out of office auto-reply, however, this did not work. The issue is that the emails asking for access come from `drive-shares-dm-noreply@google.com`, so the auto-reply goes to that black hole address, never reaching the actual requestee. The recipient email is stored in the reply-to field which is being ignored by the out of office reply. Hence my solution below.
+
 ## Features
 
 - Automatically searches for unread email threads matching specific criteria.
