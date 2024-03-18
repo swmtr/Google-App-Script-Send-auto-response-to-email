@@ -17,21 +17,27 @@ function sendResponseOnAccessRequest() {
 
       // Check if the message is from the specific sender and subject line
       if (message.getFrom().indexOf("drive-shares-dm-noreply@google.com") !== -1 && message.getSubject().indexOf("Share request for") !== -1) {
-  
-         // Log that a matching message is found
+
+        // Extract the reply-to address (careful, this might not work in all cases)
+        var replyTo = message.getReplyTo();
+        var replyToName = "";
+        // extract first name if it is present
+        if (replyTo && !replyTo.startsWith("<")) {
+          replyToName = replyTo.split(" ")[0].trim();
+        }
+        //Logger.log("receipient: " + replyToName);
+
+        var senderName = "Your name <youremail@goes.here>"
+        //Logger.log("sender: " + senderName);
+
+       // Log that a matching message is found
         //Logger.log("Matching message found in thread " + i + ", message " + j);
         // Define the pre-defined message
-        var responseMessage = "Hi,\n\n" +
+        var responseMessage = "Hi" + (replyToName ? " " + replyToName : "") + ",\n\n" +
                               "thank you for the request.\n\n" +
                               "Feel free to make a copy of it yourself by doing.....\n\n" +
                               "Have a great day,\n\n" +
                               "your name\n\n";
-        
-        // Extract the reply-to address (careful, this might not work in all cases)
-        var replyTo = message.getReplyTo();
-        var senderName = "Your name <youremail@goes.here>"
-        //Logger.log("sender: " + senderName);
-      
 
        // Send the response email (replace with your actual email sending function)
       GmailApp.sendEmail(
